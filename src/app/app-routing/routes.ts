@@ -20,6 +20,10 @@ export const routes: Routes = [
         component: DishdetailComponent
     },
     {
+        path: 'aboutus',
+        component: AboutComponent
+    },
+    {
         path: 'contactus',
         component: ContactComponent
     },
