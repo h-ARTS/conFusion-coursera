@@ -40,21 +40,21 @@ fxLayoutGap="10px">
    </div>
  </div>
  
- <div fxFlex>
-           <md-card>
-               <blockquote>
-                   <h3>You better cut the pizza in four pieces because
-                       I'm not hungry enough to eat six.</h3>
-                   <footer>-- Yogi Berra,
-                     <cite>The Wit and Wisdom of Yogi Berra,
-                       P. Pepe, Diversion Books, 2014</cite>
-                   </footer>
-               </blockquote>
-           </md-card>
- </div>
+  <div fxFlex>
+    <md-card>
+        <blockquote>
+            <h3>You better cut the pizza in four pieces because
+                I'm not hungry enough to eat six.</h3>
+            <footer>-- Yogi Berra,
+              <cite>The Wit and Wisdom of Yogi Berra,
+                P. Pepe, Diversion Books, 2014</cite>
+            </footer>
+        </blockquote>
+    </md-card>
+  </div>
 
 
-   <div fxFlex>
+   <div *ngIf="leaders" fxFlex>
      <h2>Corporate Leadership</h2>
      <md-list>
        <md-list-item *ngFor="let leader of leaders">
@@ -64,5 +64,8 @@ fxLayoutGap="10px">
         <p md-line>{{leader.description}}</p>
        </md-list-item>
      </md-list>
+  </div>
+  <div [hidden]="leaders" fxFlex>
+    <md-spinner></md-spinner> <h4>Loading... Please wait.</h4>
   </div>
 </div>

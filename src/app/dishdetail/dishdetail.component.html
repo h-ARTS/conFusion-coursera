@@ -26,7 +26,7 @@
   </div>
 
   <div fxFlex="40">
-    <h3>Comments</h3>
+    <h3 *ngIf="dish">Comments</h3>
     <md-list *ngIf="dish">
       <md-list-item *ngFor="let review of dish.comments">
         <p md-line>{{review.comment}}</p>
@@ -37,6 +37,10 @@
         </p>
       </md-list-item>
     </md-list>
+  </div>
+
+  <div [hidden]="dish" fxFlexFill>
+    <md-spinner></md-spinner> <h4>Loading... Please wait.</h4>
   </div>
 
 </div>
