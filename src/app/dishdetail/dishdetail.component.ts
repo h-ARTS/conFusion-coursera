@@ -97,6 +97,7 @@ export class DishdetailComponent implements OnInit {
   }
 
   setPrevNext(dishId: number) {
+    // tslint:disable-next-line:prefer-const
     let index = this.dishIds.indexOf(dishId);
     this.prev = this.dishIds[(this.dishIds.length + index - 1) % this.dishIds.length];
     this.next = this.dishIds[(this.dishIds.length + index + 1) % this.dishIds.length];
