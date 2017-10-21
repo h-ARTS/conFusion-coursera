@@ -70,13 +70,15 @@ export class ContactComponent implements OnInit {
     const form = this.feedbackForm;
 
     for (const field in this.formErrors) {
-      // clear previous error messages if any..
-      this.formErrors[field] = '';
-      const control = form.get(field);
-      if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
+      if (this.formErrors.hasOwnProperty(field)) {
+        // clear previous error messages if any..
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            this.formErrors[field] += messages[key] + ' ';
+          }
         }
       }
     }
