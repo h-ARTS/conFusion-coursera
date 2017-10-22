@@ -54,7 +54,7 @@ fxLayoutGap="10px">
   </div>
 
 
-   <div *ngIf="leaders" fxFlex>
+   <div *ngIf="leaders" fxFlex [@expand]>
      <h2>Corporate Leadership</h2>
      <md-list>
        <md-list-item *ngFor="let leader of leaders">
