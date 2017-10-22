@@ -21,6 +21,7 @@ export class DishdetailComponent implements OnInit {
   dishIds: number[];
   prev: number;
   next: number;
+  errMsg: string;
 
   formErrors = {
     'author': '',
@@ -52,7 +53,8 @@ export class DishdetailComponent implements OnInit {
       .subscribe(dish => {
         this.dish = dish;
         this.setPrevNext(dish.id);
-      });
+      },
+      errmsg => this.errMsg = <any>errmsg);
   }
 
   createCommentForm(): void {
