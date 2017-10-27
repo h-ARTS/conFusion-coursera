@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animation';
+import { flyInOut, expand } from '../animations/app.animation';
+
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -13,14 +15,19 @@ import { flyInOut } from '../animations/app.animation';
     'style': 'display: block;'
   },
   animations: [
-    flyInOut()
+    flyInOut(),
+    expand()
   ]
 })
 export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  submittedFeedback = null;
   contactType = ContactType;
+  isSubmitting = false;
+  isVisible = false
+  errMsg: string;
 
   formErrors = {
     'firstname': '',
@@ -50,7 +57,8 @@ export class ContactComponent implements OnInit {
     }
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private feedbackService: FeedbackService) {
     this.createForm();
   }
 
@@ -85,6 +93,7 @@ export class ContactComponent implements OnInit {
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
           const messages = this.validationMessages[field];
+          // tslint:disable-next-line:forin
           for (const key in control.errors) {
             this.formErrors[field] += messages[key] + ' ';
           }
@@ -94,17 +103,27 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isSubmitting = true;
     this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
-    this.feedbackForm.reset({
-      firstname: '',
-      lastname: '',
-      telnum: '',
-      email: '',
-      agree: false,
-      contactType: 'None',
-      message: ''
-    });
+    this.feedbackService.submitFeedback(this.feedback)
+      .subscribe(feedback => {
+        this.submittedFeedback = feedback;
+        this.isSubmitting = false;
+        this.isVisible = true;
+    }, errMsg => this.errMsg = <any>errMsg)
+
+    setTimeout(() => {
+      this.isVisible = false;
+      this.feedbackForm.reset({
+        firstname: '',
+        lastname: '',
+        telnum: '',
+        email: '',
+        agree: false,
+        contactType: 'None',
+        message: ''
+      });
+    }, 5000);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Leader } from '../shared/leader';
+import { Feedback } from '../shared/feedback';
 
 import { Http, Response } from '@angular/http';
 import { baseURL } from '../shared/baseurl';
@@ -11,22 +11,13 @@ import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
 
 @Injectable()
-export class LeaderService {
+export class FeedbackService {
 
   constructor(private restangular: Restangular,
               private processHTTPMsgService: ProcessHTTPMsgService) { }
 
-  getLeaders(): Observable<Leader[]> {
-    return this.restangular.all('leaders').getList().delay(2000);
-  }
-
-  getLeader(id: number): Observable<Leader> {
-    return this.restangular.one('leaders', id).get().delay(2000);
-  }
-
-  getFeaturedLeader(): Observable<Leader> {
-    return this.restangular.all('leaders').getList({ featured: true })
-      .map(leaders => leaders[0]).delay(2000);
+  submitFeedback(feedback): Observable<Feedback> {
+    return this.restangular.all('feedback').post(feedback).delay(2000);
   }
 
 }

@@ -17,16 +17,16 @@ export class DishService {
               private processHTTPMsgService: ProcessHTTPMsgService) { }
 
   getDishes(): Observable<Dish[]> {
-    return this.restangular.all('dishes').getList();
+    return this.restangular.all('dishes').getList().delay(2000);
   }
 
   getDish(id: number): Observable<Dish> {
-    return this.restangular.one('dishes', id).get();
+    return this.restangular.one('dishes', id).get().delay(2000);
   }
 
   getFeaturedDish(): Observable<Dish> {
     return this.restangular.all('dishes').getList({ featured: true })
-      .map(dishes => dishes[0]);
+      .map(dishes => dishes[0]).delay(2000);
   }
 
   getDishIds(): Observable<number[]> {
